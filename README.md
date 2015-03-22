@@ -1,11 +1,8 @@
-# Debug
+# debug
 
-`debug` like the [nodejs debug](https://github.com/visionmedia/debug)
-, but rubyish
+tiny ruby debugging utility modelled after [nodejs debug](https://github.com/visionmedia/debug)
 
 ## Installation
-
-Install globally 
 
     $ gem install debug
 
