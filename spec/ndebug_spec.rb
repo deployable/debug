@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Debug do
+describe NDebug do
 
   it 'has a version number' do
-    expect( Debug::VERSION ).to eq "0.2.0"
+    expect( NDebug::VERSION ).to eq "0.2.0"
   end
 
   it 'does nothing when DEBUG is not set' do
@@ -11,7 +11,7 @@ describe Debug do
     ENV['DEBUG'] = ''
 
     class NegTest
-      include Debug
+      include NDebug
 
       def something
         debug 'negtest'
@@ -25,7 +25,7 @@ describe Debug do
   it 'does nothing when DEBUG is blank' do
     ENV['DEBUG'] = ''
     class BlankTest
-      include Debug
+      include NDebug
 
       def something
         debug 'blanktest'
@@ -40,7 +40,7 @@ describe Debug do
     allow(Time).to receive(:now).and_return Time.mktime(1970,1,1), Time.mktime(1970,1,1,0,0,1)
 
     class PosTest
-      include Debug
+      include NDebug
 
       def something
         debug 'postest'
@@ -57,13 +57,13 @@ describe Debug do
     allow(Time).to receive(:now) { Time.mktime(1970,1,1) }
 
     class OneTest
-      include Debug
+      include NDebug
       def something
         debug 'onetest'
       end
     end
     class TwoTest
-      include Debug
+      include NDebug
       def something
         debug 'twotest'
       end
@@ -89,7 +89,7 @@ describe Debug do
 
     class One
       class Two
-        include Debug
+        include NDebug
         def something
           debug 'one::two'
         end
@@ -108,7 +108,7 @@ describe Debug do
 
     class One
       class Two
-        include Debug
+        include NDebug
         def something
           debug 'one::two'
         end
@@ -127,7 +127,7 @@ describe Debug do
 
     module Oone
       class Two
-        include Debug
+        include NDebug
         def something
           debug 'oone::two'
         end
@@ -147,7 +147,7 @@ describe Debug do
     class Sub
       class Star
         #binding.pry
-        include Debug
+        include NDebug
         def something
           debug 'this is the sub star *'
         end
@@ -166,7 +166,7 @@ describe Debug do
     class Sub
       class Star
         #binding.pry
-        include Debug
+        include NDebug
         def something
           debug 'this is the sub star *'
         end
@@ -183,7 +183,7 @@ describe Debug do
       Time.mktime(1970,1,1,1), Time.mktime(1970,1,1,2)
 
     class OneTest
-      include Debug
+      include NDebug
       def something
         debug 'onetest'
       end
@@ -199,7 +199,7 @@ describe Debug do
     ENV['DEBUG'] = 'OneTest'
 
     class OneTest
-      include Debug
+      include NDebug
       def something
         debug 'onetest'
       end

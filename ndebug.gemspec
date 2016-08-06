@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'debug/version'
+require 'ndebug/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "debug"
-  spec.version       = Debug::VERSION
+  spec.name          = "ndebug"
+  spec.version       = NDebug::VERSION
   spec.authors       = ["Matt Hoyle"]
   spec.email         = ["matt@deployable.co"]
   spec.summary       = %q{debug like node.js, but rubyish}

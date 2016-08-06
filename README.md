@@ -1,15 +1,15 @@
-# debug
+# NDebug
 
-tiny ruby debugging utility modelled after [nodejs debug](https://github.com/visionmedia/debug)
+tiny ruby debug utility modelled after [nodejs debug](https://github.com/visionmedia/debug)
 
 ## Installation
 
-    $ gem install debug
+    $ gem install ndebug
 
 Or add this line to your application's Gemfile:
 
 ```ruby
-gem 'debug'
+gem 'ndebug'
 ```
 
 And then execute:
@@ -19,14 +19,14 @@ And then execute:
 ## Usage
 
 ```ruby
-require "debug
+require "ndebug"
 ```
 
-Then you can include `Debug` into the classes you want to run the `debug` method in
+Then you can include `NDebug` into the classes you want to run the `debug` method in
 
 ```ruby
 class Something
-  include Debug
+  include NDebug
 end
 ```
 
@@ -42,7 +42,7 @@ Would turn debug on for any Classes or Modules scoped under `Class::Sub::` and `
 
 ```ruby
 class Something
-  include Debug
+  include NDebug
 
   def some_method
     a = "3208f23-23".split 2
@@ -58,7 +58,7 @@ Something.new.some_method
 
 ## Contributing
 
-1. Fork it ( https://github.com/deployable/debug/fork )
+1. Fork it ( https://github.com/deployable/ndebug/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)

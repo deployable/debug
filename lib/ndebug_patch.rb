@@ -1,4 +1,6 @@
-module Debug
+# A Debugging monkeypatch
+
+module NDebug
 
   debug_ori = method :debug
 
