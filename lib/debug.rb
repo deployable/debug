@@ -18,10 +18,10 @@ module NDebug
     klass.instance_variable_set :@d_ndebug_these_classes, debugs
     
     # Create the regexp for all the named classes from `DEBUG`
-    re_debugs_string = debugs.join('|')
+    re_ndebugs_string = debugs.join('|')
     re = Regexp.new( /
       \A                     # Beginning of string
-      (#{re_nebugs_string})  # Any of the classes from DEBUG
+      (#{re_ndebugs_string})  # Any of the classes from DEBUG
       \Z                     # End of string
     /x )
     klass.instance_variable_set :@d_ndebug_this_re, re
