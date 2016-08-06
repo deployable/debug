@@ -3,10 +3,11 @@ require 'spec_helper'
 describe Debug do
 
   it 'has a version number' do
-    expect( Debug::VERSION ).to eq "0.0.1"
+    expect( Debug::VERSION ).to eq "0.2.0"
   end
 
-  it 'does nothing useful' do
+  it 'does nothing when DEBUG is not set' do
+
     class NegTest
       include Debug
 
@@ -18,8 +19,21 @@ describe Debug do
     expect( NegTest.new.something ).to eq false
   end
 
-  it 'does debug' do
+  it 'does nothing when DEBUG is blank' do
+    ENV['DEBUG'] = ''
+    class BlankTest
+      include Debug
+
+      def something
+        debug 'blanktest'
+      end
+    end
+    expect( BlankTest.new.something ).to eq false
+  end
+
+  it 'logs debug when DEBUG is "*"' do
     ENV['DEBUG'] = '*'
+    allow(Time).to receive(:now).and_return Time.mktime(1970,1,1), Time.mktime(1970,1,1,0,0,1)
     class PosTest
       include Debug
 
@@ -27,11 +41,15 @@ describe Debug do
         debug 'postest'
       end
     end
-    expect( PosTest.new.something ).to eq true
+    expect( PosTest.new.something ).to eq Time.mktime(1970,1,1,0,0,1)
   end
 
-  it 'does many debug' do
+  it 'logs debug for multiple classes' do
+
     ENV['DEBUG'] = 'OneTest,TwoTest'
+
+    allow(Time).to receive(:now) { Time.mktime(1970,1,1) }
+
     class OneTest
       include Debug
       def something
@@ -48,14 +66,21 @@ describe Debug do
       def something
       end
     end
-    expect( OneTest.new.something ).to eq true
-    expect( TwoTest.new.something ).to eq true
+
+    allow(Time).to receive(:now).and_return Time.mktime(1970,1,1,0,0,1), Time.mktime(1970,1,1,0,0,2)
+
+    expect( OneTest.new.something ).to eq Time.mktime(1970,1,1,0,0,1)
+    expect( TwoTest.new.something ).to eq Time.mktime(1970,1,1,0,0,2)
     expect( ThrTest.new.something ).to eq nil
   end
 
 
-  it 'does debug on child with a star' do
+  it 'runs debug on child class via ::*' do
+    
     ENV['DEBUG'] = 'One::*'
+    
+    allow(Time).to receive(:now).and_return Time.mktime(1970,1,1), Time.mktime(1970,1,1,0,0,1)
+
     class One
       class Two
         include Debug
@@ -64,12 +89,17 @@ describe Debug do
         end
       end
     end
-    expect( One::Two.new.something ).to eq true
+
+    expect( One::Two.new.something ).to eq Time.mktime(1970,1,1,0,0,1)
   end
 
 
-  it 'debugs without a star' do
+  it 'runs debug on a child class without a star' do
+    
     ENV['DEBUG'] = 'One::Two'
+    
+    allow(Time).to receive(:now).and_return Time.mktime(1970,1,1), Time.mktime(1970,1,1,0,0,1)
+
     class One
       class Two
         include Debug
@@ -78,12 +108,17 @@ describe Debug do
         end
       end
     end
-    expect( One::Two.new.something ).to eq true
+
+    expect( One::Two.new.something ).to eq Time.mktime(1970,1,1,0,0,1)
   end
 
 
-  it 'debugs on a module without star' do
+  it 'runs debug on a module without a star' do
+    
     ENV['DEBUG'] = 'Oone::Two'
+    
+    allow(Time).to receive(:now).and_return Time.mktime(1970,1,1), Time.mktime(1970,1,1,0,0,1)
+
     module Oone
       class Two
         include Debug
@@ -92,12 +127,15 @@ describe Debug do
         end
       end
     end
-    expect( Oone::Two.new.something ).to eq true
+
+    expect( Oone::Two.new.something ).to eq Time.mktime(1970,1,1,0,0,1)
   end
 
 
   it 'doesn\'t debug the upper class when using ::star' do
+    
     ENV['DEBUG'] = 'Sub::Star::*'
+    
     class Sub
       class Star
         #binding.pry
@@ -111,7 +149,11 @@ describe Debug do
   end
 
   it 'debugs the upper class when using star' do
+
     ENV['DEBUG'] = 'Sub::Star*'
+
+    allow(Time).to receive(:now).and_return Time.mktime(1970,1,1), Time.mktime(1970,1,2)
+
     class Sub
       class Star
         #binding.pry
@@ -121,12 +163,16 @@ describe Debug do
         end
       end
     end
-    expect( Sub::Star.new.something ).to eq true
+    expect( Sub::Star.new.something ).to eq Time.mktime(1970,1,2)
   end
 
   it 'prints a large ms' do
 
     ENV['DEBUG'] = 'OneTest'
+
+    allow(Time).to receive(:now).and_return Time.mktime(1970,1,1),
+      Time.mktime(1970,1,1,1), Time.mktime(1970,1,1,2)
+
     class OneTest
       include Debug
       def something
@@ -134,8 +180,26 @@ describe Debug do
       end
     end
 
-    expect( OneTest.new.something ).to eq true
-    sleep 0.1
-    expect( OneTest.new.something ).to eq true
+    expect( OneTest.new.something ).to eq Time.mktime(1970,1,1,1)
+    expect( OneTest.new.something ).to eq Time.mktime(1970,1,1,2)
   end
+
+
+  it 'prints a some positive value with real time' do
+
+    ENV['DEBUG'] = 'OneTest'
+
+    class OneTest
+      include Debug
+      def something
+        debug 'onetest'
+      end
+    end
+
+    first_debug = OneTest.new.something
+    sleep 0.1
+    second_debug = OneTest.new.something
+    expect( second_debug - first_debug ).to be > 0.1
+  end
+
 end
