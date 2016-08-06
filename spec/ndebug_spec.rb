@@ -3,7 +3,7 @@ require 'spec_helper'
 describe NDebug do
 
   it 'has a version number' do
-    expect( NDebug::VERSION ).to eq "0.2.0"
+    expect( NDebug::VERSION ).to eq "0.2.1"
   end
 
   it 'does nothing when DEBUG is not set' do

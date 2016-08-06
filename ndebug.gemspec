@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["matt@deployable.co"]
   spec.summary       = %q{debug like node.js, but rubyish}
   spec.description   = %q{debug like node.js, but rubyish}
-  spec.homepage      = "https://github.com/deployable/debug"
+  spec.homepage      = "https://github.com/deployable/ndebug"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
