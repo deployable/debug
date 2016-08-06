@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = Debug::VERSION
   spec.authors       = ["Matt Hoyle"]
   spec.email         = ["matt@deployable.co"]
-  spec.summary       = %q{debug like nodes debug, but rubyish}
-  spec.description   = %q{An implementation of nodes debug but applying ruby's concept of the world to the idea}
-  spec.homepage      = "http://code.deployable.co/ruby/debug"
+  spec.summary       = %q{debug like node.js, but rubyish}
+  spec.description   = %q{debug like node.js, but rubyish}
+  spec.homepage      = "https://github.com/deployable/debug"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
@@ -21,5 +21,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.7"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.1"
-  spec.add_development_dependency "pry-byebug"
+  spec.add_development_dependency "pry-byebug", "~> 3.4"
 end

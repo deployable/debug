@@ -15,7 +15,7 @@ describe Debug do
       end
     end
 
-    expect( NegTest.new.something ).to eq nil
+    expect( NegTest.new.something ).to eq false
   end
 
   it 'does debug' do
@@ -96,19 +96,33 @@ describe Debug do
   end
 
 
-  it 'debugs the upper class when using star' do
+  it 'doesn\'t debug the upper class when using ::star' do
     ENV['DEBUG'] = 'Sub::Star::*'
     class Sub
       class Star
+        #binding.pry
         include Debug
         def something
-          debug 'oone::two'
+          debug 'this is the sub star *'
+        end
+      end
+    end
+    expect( Sub::Star.new.something ).to eq false
+  end
+
+  it 'debugs the upper class when using star' do
+    ENV['DEBUG'] = 'Sub::Star*'
+    class Sub
+      class Star
+        #binding.pry
+        include Debug
+        def something
+          debug 'this is the sub star *'
         end
       end
     end
     expect( Sub::Star.new.something ).to eq true
   end
-
 
   it 'prints a large ms' do
 
