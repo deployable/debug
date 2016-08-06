@@ -18,19 +18,27 @@ And then execute:
 
 ## Usage
 
-You include `Debug` in the classes you want to run the 
-`debug` method in
+```ruby
+require "debug
+```
 
-The DEBUG environment variables controls debug logging
-for classes with space or comma seperated Module/Class namespaces
+Then you can include `Debug` into the classes you want to run the `debug` method in
+
+```ruby
+class Something
+  include Debug
+end
+```
+
+The DEBUG environment variables controls what debug logging occurs.
 
     DEBUG='MySuperClass"
 
 Would enable debug in the `MySuperClass` alone
 
-    DEBUG='Class::Sub::*,Other::*'
+    DEBUG='Class::Sub::*, Other::*'
 
-Would turn debug on for any Objects including `Debug` scoped under `Class::Sub::` and `Other::`
+Would turn debug on for any Classes or Modules scoped under `Class::Sub::` and `Other::`
 
 ```ruby
 class Something
@@ -46,6 +54,7 @@ Something.new.some_method
 ```
 
     $ DEBUG='Something' ruby something.rb
+
 
 ## Contributing
 

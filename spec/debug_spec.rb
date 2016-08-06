@@ -8,6 +8,8 @@ describe Debug do
 
   it 'does nothing when DEBUG is not set' do
 
+    ENV['DEBUG'] = ''
+
     class NegTest
       include Debug
 
@@ -18,6 +20,7 @@ describe Debug do
 
     expect( NegTest.new.something ).to eq false
   end
+
 
   it 'does nothing when DEBUG is blank' do
     ENV['DEBUG'] = ''
@@ -31,9 +34,11 @@ describe Debug do
     expect( BlankTest.new.something ).to eq false
   end
 
+
   it 'logs debug when DEBUG is "*"' do
     ENV['DEBUG'] = '*'
     allow(Time).to receive(:now).and_return Time.mktime(1970,1,1), Time.mktime(1970,1,1,0,0,1)
+
     class PosTest
       include Debug
 
@@ -43,6 +48,7 @@ describe Debug do
     end
     expect( PosTest.new.something ).to eq Time.mktime(1970,1,1,0,0,1)
   end
+
 
   it 'logs debug for multiple classes' do
 
@@ -135,6 +141,8 @@ describe Debug do
   it 'doesn\'t debug the upper class when using ::star' do
     
     ENV['DEBUG'] = 'Sub::Star::*'
+
+    allow(Time).to receive(:now).and_return Time.mktime(1970,1,1), Time.mktime(1970,1,2)
     
     class Sub
       class Star
@@ -145,6 +153,7 @@ describe Debug do
         end
       end
     end
+
     expect( Sub::Star.new.something ).to eq false
   end
 
